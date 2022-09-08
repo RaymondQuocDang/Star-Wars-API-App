@@ -28,18 +28,18 @@ function DisplayInfo({ info, planet, species, pageCount, setPageCount }) {
         setPageCount(prevCount => prevCount - 1)
     }
 
-    const pagenationButton = () => {
+    const paginationButton = () => {
 
         if (pageCount > 1) {
             return (
                 <div>    
-                    <button className="pagenationButton" onClick={previousPage}>Previous</button>
-                    <button className="pagenationButton" onClick={nextPage}>Next</button>
+                    <button className="paginationButton" onClick={previousPage}>Previous</button>
+                    <button className="paginationButton" onClick={nextPage}>Next</button>
                 </div>
             );
         }
         else {
-            return (<button className="pagenationButton" onClick={nextPage}>Next</button>
+            return (<button className="paginationButton" onClick={nextPage}>Next</button>
             );
         }
     }
@@ -63,7 +63,7 @@ function DisplayInfo({ info, planet, species, pageCount, setPageCount }) {
                     {displayPerson()}
                 </tbody>
             </table>
-            {pagenationButton()}
+            {paginationButton()}
         </div>
     );
 
