@@ -2,64 +2,64 @@ import './App.css';
 import DisplayInfo from './DisplayInfo.js'
 import { useEffect, useState} from 'react';
 import SearchCharacter from './SearchCharacter.js'
+import axios from 'axios';
 
 function App() {
 
-  const [info, setInfo] = useState([])
+  const [info, setInfo] = useState(null)
   const [planet, setPlanet] = useState([])
   const [species, setSpecies] = useState([])
-  const [pageCount, setPageCount] = useState(1)
-
   
   useEffect(() => {
     
-    // Fetch for first 10 people
-    fetch(`https://swapi.dev/api/people/?page=${pageCount}`)
-    .then((response) => response.json())
-    .then((data) => {
-      setInfo(data.results)
-    })
+    fetchCharacter();
+    fetchSpecies();
+    fetchPlanets();
 
-    // Fetch for homeworld
-    fetch(`https://swapi.dev/api/people/?page=${pageCount}`)
-    .then((response) => response.json())
-    .then((data) => {
-      return Promise.all(data.results.map((person) => {
-        return fetch(person.homeworld)
-      }))
-    })  
-    .then(responses => Promise.all(responses.map(r => r.json())))
-    .then(planets => {
-      setPlanet(planets)
-    })
-    
-    // Fetch for species
-    fetch(`https://swapi.dev/api/people/?page=${pageCount}`)
-    .then(response => response.json())
-    .then(data => {
-      return Promise.all(data.results.map((person) => {
-        return (person.species.length > 0) ? fetch(person.species[0]) : null;
-      }))
-    })
-    .then(responses => Promise.all(responses.map(r => {
-      return (r != null) ? r.json() : {name: ' '};
-    })))
-    .then(species => {
-      setSpecies(species)
-    })
-
-  }, [pageCount])
+  }, [])
   
+  async function fetchCharacter() {
+    const characterPages = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    const characterList = await Promise.all(characterPages.map((page) => {
+      return axios.get(`https://swapi.dev/api/people/?page=${page}`)
+    }))    
+    const characters = characterList.map((data) => {
+      return data.data.results
+    })
+    setInfo(characters)
+    console.log(characters)
+  }
+
+
+
+  async function fetchSpecies() {
+    const speciesPages = [1, 2, 3, 4]
+    const speciesList = await Promise.all(speciesPages.map((page) => {
+      return axios.get(`https://swapi.dev/api/species/?page=${page}`)
+    }))
+    const species = speciesList.map((data) => {
+      return data.data.results
+    })
+    setSpecies(species)
+    console.log(species)   
+  }
+
+  async function fetchPlanets() {
+    const planetPages = [1, 2, 3, 4, 5, 6]
+    const planetList = await Promise.all(planetPages.map((page) => {
+      return axios.get(`https://swapi.dev/api/planets/?page=${page}`)
+    }))
+    const planets = planetList.map((data) => {
+      return data.data.results
+    })
+    setPlanet(planets)  
+  }
 
   return (
     <div>
       <SearchCharacter />
       <DisplayInfo
       info={info} 
-      planet={planet}
-      species={species}
-      pageCount={pageCount}
-      setPageCount={setPageCount}
       />
     </div>
   );

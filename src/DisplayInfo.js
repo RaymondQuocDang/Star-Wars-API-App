@@ -1,49 +1,29 @@
 function DisplayInfo({ info, planet, species, pageCount, setPageCount }) {    
 
-    const displayPerson = () => {
+    function displayPerson() {
         
-        const personList = []
-
-        for (let i = 0; i < info.length; i++) {
-
-            personList.push(
-                <tr key={[i]}>
-                    <td>{info[i].name}</td>
-                    <td>{info[i].birth_year}</td>
-                    <td>{info[i].height}</td>
-                    <td>{info[i].mass}</td>
-                    <td>{planet[i]?.name || "loading... "}</td>
-                    <td>{species[i]?.name || "loading... "}</td>
+        if (info !== null ) {
+            const peopleTable = info[0].map((person, i) => {
+                return(
+                    <tr key={i}>
+                    <td>{person.name}</td>
+                    <td>{person.birth_year}</td>
+                    <td>{person.height}</td>
+                    <td>{person.mass}</td>
+                    <td>{person.planet}</td>
+                    <td>{person.species}</td>
                 </tr>
-            );
+                );
+            }) 
+
+        if (info !== null) {
+            const peopleList = [].concat(...info)
+            console.log(peopleList);
         }
-        return personList;
-    }
 
-    const nextPage = () => {
-        setPageCount(prevCount => prevCount + 1)
-    }
-
-    const previousPage = () => {
-        setPageCount(prevCount => prevCount - 1)
-    }
-
-    const paginationButton = () => {
-
-        if (pageCount > 1) {
-            return (
-                <div>    
-                    <button className="paginationButton" onClick={previousPage}>Previous</button>
-                    <button className="paginationButton" onClick={nextPage}>Next</button>
-                </div>
-            );
-        }
-        else {
-            return (<button className="paginationButton" onClick={nextPage}>Next</button>
-            );
+            return peopleTable
         }
     }
-        
 
     return (
         <div className="container">
@@ -63,7 +43,6 @@ function DisplayInfo({ info, planet, species, pageCount, setPageCount }) {
                     {displayPerson()}
                 </tbody>
             </table>
-            {paginationButton()}
         </div>
     );
 
