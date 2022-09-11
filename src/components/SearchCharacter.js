@@ -1,10 +1,10 @@
-import { useState } from 'react';
-
 function SearchCharacter() {
 
     return (
         <div className="container">
-            <h2>Search Character</h2>
+            <div className="title-container">
+                <h1 className="search-title">Search Character</h1>
+            </div>
             <div>
                 <input className="form-control" type='text'></input>
             </div>

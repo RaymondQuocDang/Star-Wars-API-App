@@ -1,0 +1,18 @@
+* {
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+}
+
+.title-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.form-control {
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+
+.search-title {
+    font-weight: 600;
+}
