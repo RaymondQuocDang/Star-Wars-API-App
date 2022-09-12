@@ -5,14 +5,65 @@
 .title-container {
     display: flex;
     justify-content: center;
+}
+
+.star-wars-title {
+    width: 400px;
     margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 .form-control {
     margin-bottom: 30px;
-    margin-top: 10px;
 }
 
-.search-title {
+
+body {
+    background-image: url('./images/stars-background.png');
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    color: #ffe81f;
+    list-style-type: none;
+    padding: 0px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 30px;
+}
+
+.button-container a {
+    padding: 5px;
+}
+
+.prev-button {
+    color: #ffe81f;
+    text-decoration: none;
+    border: 1px solid #ffe81f;
+    border-radius: 5px;
+}
+
+.next-button {
+    color: #ffe81f;
+    text-decoration: none;
+    border: 1px solid #ffe81f;
+    border-radius: 5px;
+}
+
+.active-button {
+    border: 1px solid #ffe81f;
+    border-radius: 5px;
+}
+
+.disabled-button {
+    visibility: hidden;
+}
+
+.loading-container {
+    color: #ffe81f;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
     font-weight: 600;
 }

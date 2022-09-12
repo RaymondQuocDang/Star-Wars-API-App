@@ -7,6 +7,7 @@ import axios from 'axios';
 function App() {
 
   const [characterData, setCharacterData] = useState(null)
+  const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
 
@@ -70,10 +71,13 @@ function App() {
   }
 
   return (
-    <div>
-      <SearchCharacter />
+    <div className='App'>
+      <SearchCharacter 
+        setSearchValue={setSearchValue}
+      />
       <DisplayInfo
         characterData={characterData}
+        searchValue={searchValue}
       />
     </div>
   );

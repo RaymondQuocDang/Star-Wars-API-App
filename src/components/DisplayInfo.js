@@ -1,21 +1,39 @@
-function DisplayInfo({ characterData }) {
+import { useState } from 'react';
+import Paginate from './Paginate';
+
+function DisplayInfo({ characterData, searchValue }) {
+
+    const [pageNumber, setPageNumber] = useState(0);
+    const charactersPerPage = 10;
+    const charactersViewed = pageNumber * charactersPerPage;
 
     function displayCharacters() {
 
-        const peopleTable = characterData.map((char, i) => {
-            return (
-                <tr key={i}>
-                    <td>{char.name}</td>
-                    <td>{char.birth_year}</td>
-                    <td>{char.height !== 'unknown' ? `${char.height} cm` : `${char.height}`}</td>
-                    <td>{char.mass !== 'unknown' ? `${char.mass} kg` : `${char.mass}`}</td>
-                    <td>{char.homeworld}</td>
-                    <td>{char.species}</td>
-                </tr>
-            );
-        })
+        const peopleTable = characterData
+            .filter((val) => {
+                if (val.name.includes(searchValue) ||
+                    val.birth_year.includes(searchValue) ||
+                    val.height.includes(searchValue) ||
+                    val.mass.includes(searchValue) ||
+                    val.homeworld.includes(searchValue) ||
+                    val.species.includes(searchValue)) {
+                    return val;
+                }
+            })
+            .slice(charactersViewed, charactersViewed + charactersPerPage)
+            .map((char, i) => {
+                return (
+                    <tr key={i}>
+                        <td>{char.name}</td>
+                        <td>{char.birth_year}</td>
+                        <td>{char.height !== 'unknown' ? `${char.height} cm` : `${char.height}`}</td>
+                        <td>{char.mass !== 'unknown' ? `${char.mass} kg` : `${char.mass}`}</td>
+                        <td>{char.homeworld}</td>
+                        <td>{char.species}</td>
+                    </tr>
+                );
+            })
         return peopleTable
-
     }
 
     function displayTable() {
@@ -38,14 +56,19 @@ function DisplayInfo({ characterData }) {
                 </table>
             );
         } else {
-            return <div>Loading...</div>
-
+            return <div className='loading-container'><p className='loading-text'>Loading...</p></div>
         }
     }
 
     return (
         <div className="container">
             {displayTable()}
+            <Paginate 
+            searchValue={searchValue}
+            setPageNumber={setPageNumber}
+            characterData={characterData}
+            charactersPerPage={charactersPerPage}
+            />
         </div>
     );
 
